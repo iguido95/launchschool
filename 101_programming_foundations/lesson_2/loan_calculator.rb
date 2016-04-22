@@ -59,6 +59,18 @@ def provide_duration_in_months
   month_duration
 end
 
+def print_summary(loan_amount, interest_rate, month_duration, annuity)
+  puts("-" * 35)
+  puts("Summary:")
+  puts("-" * 35)
+  puts(" *Loan\t\t#{format('€ %#.2f', loan_amount)}")
+  puts(" *Interest\t#{format('%#.2f', interest_rate)}%")
+  puts(" *Duration\t#{format('%#.1f', month_duration)} Months")
+  puts("-" * 35)
+  puts(" *Monthly Annuity\t#{format('€ %#.2f', annuity)}")
+  puts("-" * 35)
+end
+
 loop do
   prompt("Welcome to the loan calculator. Please provide the following details")
 
@@ -68,21 +80,13 @@ loop do
 
   annuity = calculate_annuity(loan_amount, interest_rate, duration)
 
-  puts("-" * 35)
-  puts("Summary:")
-  puts("-" * 35)
-  puts(" *Loan\t\t#{format('€ %#.2f', loan_amount)}")
-  puts(" *Interest\t#{format('%#.2f', interest_rate)}%")
-  puts(" *Duration\t#{format('%#.1f', duration)} Months")
-  puts("-" * 35)
-  puts(" *Monthly Annuity\t#{format('€ %#.2f', annuity)}")
-  puts("-" * 35)
+  print_summary(loan_amount, interest_rate, duration, annuity)
 
   prompt("Do you want to calculate another loan? (y/n)")
   answer = gets.chomp.downcase
   if answer == "y"
     prompt("Resetting values ...")
-    sleep(1.1)
+    sleep(0.9)
     clear_screen
   else
     prompt("Ok. Thanks for using this calculator")
