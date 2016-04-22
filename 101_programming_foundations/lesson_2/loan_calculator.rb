@@ -29,7 +29,7 @@ def get_valid_postive_float(message)
   user_input
 end
 
-def get_loan_amount()
+def get_loan_amount
   prompt("What is your total loan amount? eg. 125000.68")
 
   loan_amount = get_valid_postive_float("You have to enter a valid loan amount.
@@ -37,7 +37,7 @@ def get_loan_amount()
   loan_amount
 end
 
-def get_interest_rate()
+def get_interest_rate
   prompt("What is the annual interest rate? eg. '6.5' for 6.5%")
 
   interest_rate = get_valid_postive_float("You have to enter a valid interest rate.
@@ -45,7 +45,7 @@ def get_interest_rate()
   interest_rate
 end
 
-def get_duration_in_months()
+def get_duration_in_months
   prompt("What is the loan duration in years? eg. 4 years")
   user_input = nil
 
@@ -54,7 +54,6 @@ def get_duration_in_months()
 
   month_duration = year_duration * 12.0
 end
-
 
 loop do
   prompt("Welcome to the loan calculator. Please provide the following details")
@@ -71,14 +70,12 @@ loop do
   puts(" *Loan\t\t#{sprintf("€ %#.2f", loan_amount)}")
   puts(" *Interest\t#{sprintf("%#.2f", interest_rate)}%")
   puts(" *Duration\t#{sprintf("%#.1f", duration)} Months")
-  puts("-"*35)
+  puts("-" * 35)
   puts(" *Monthly Annuity\t#{sprintf("€ %#.2f", annuity)}")
   puts("-" * 35)
 
-
   prompt("Do you want to calculate another loan? (y/n)")
   answer = gets.chomp.downcase
-
   if answer == "y"
     prompt("Resetting values ...")
     sleep(0.9)
