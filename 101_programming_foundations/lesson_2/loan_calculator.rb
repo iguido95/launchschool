@@ -10,11 +10,6 @@ def calculate_annuity(loan_amount, interest_percent_rate, months)
   (numerator / denominator)
 end
 
-def calculate_annuity_formatted(loan_amount, interest_percent_rate, months)
-  annuity = calculate_annuity(loan_amount, interest_percent_rate, months)
-  sprintf("€ %#.2f", annuity)
-end
-
 def prompt(message)
   puts "=> " + message
 end
@@ -68,7 +63,7 @@ loop do
   interest_rate = get_interest_rate()
   duration = get_duration_in_months()
 
-  formatted_annuity = calculate_annuity_formatted(loan_amount, interest_rate, duration)
+  annuity = calculate_annuity(loan_amount, interest_rate, duration)
 
   puts("-" * 35)
   prompt("Summary:")
@@ -77,7 +72,7 @@ loop do
   puts(" *Interest\t#{sprintf("%#.2f", interest_rate)}%")
   puts(" *Duration\t#{sprintf("%#.1f", duration)} Months")
   puts("-"*35)
-  puts(" *Monthly Annuity\t#{formatted_annuity}")
+  puts(" *Monthly Annuity\t#{sprintf("€ %#.2f", annuity)}")
   puts("-" * 35)
 
 
