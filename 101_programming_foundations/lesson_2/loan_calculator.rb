@@ -5,7 +5,7 @@ def calculate_annuity(loan_amount, interest_percent_rate, months)
   monthly_interest_rate = interest_rate / 12.0
 
   numerator = monthly_interest_rate * loan_amount.to_f
-  denominator = 1.0 - (1.0 + monthly_interest_rate) ** (-months)
+  denominator = 1.0 - ((1.0 + monthly_interest_rate)**-months)
 
   (numerator / denominator)
 end
@@ -47,12 +47,12 @@ end
 
 def get_duration_in_months
   prompt("What is the loan duration in years? eg. 4 years")
-  user_input = nil
 
   year_duration = get_valid_positive_float("You have to enter a valid year duration.
                                            Only (positive) numbers")
 
   month_duration = year_duration * 12.0
+  month_duration
 end
 
 loop do
@@ -65,13 +65,13 @@ loop do
   annuity = calculate_annuity(loan_amount, interest_rate, duration)
 
   puts("-" * 35)
-  prompt("Summary:")
+  puts("Summary:")
   puts("-" * 35)
-  puts(" *Loan\t\t#{sprintf("€ %#.2f", loan_amount)}")
-  puts(" *Interest\t#{sprintf("%#.2f", interest_rate)}%")
-  puts(" *Duration\t#{sprintf("%#.1f", duration)} Months")
+  puts(" *Loan\t\t#{format('€ %#.2f', loan_amount)}")
+  puts(" *Interest\t#{format('%#.2f', interest_rate)}%")
+  puts(" *Duration\t#{format('%#.1f', duration)} Months")
   puts("-" * 35)
-  puts(" *Monthly Annuity\t#{sprintf("€ %#.2f", annuity)}")
+  puts(" *Monthly Annuity\t#{format('€ %#.2f', annuity)}")
   puts("-" * 35)
 
   prompt("Do you want to calculate another loan? (y/n)")
