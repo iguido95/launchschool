@@ -14,7 +14,11 @@ def prompt(message)
   puts "=> " + message
 end
 
-def get_valid_positive_float(message)
+def clear_screen
+  system('clear') || system('cls')
+end
+
+def provide_valid_positive_float(message)
   user_input = nil
   loop do
     user_input = gets.chomp.to_f
@@ -29,26 +33,26 @@ def get_valid_positive_float(message)
   user_input
 end
 
-def get_loan_amount
+def provide_loan_amount
   prompt("What is your total loan amount? eg. 125000.68")
 
-  loan_amount = get_valid_positive_float("You have to enter a valid loan amount.
+  loan_amount = provide_valid_positive_float("You have to enter a valid loan amount.
                                           Only (positive) numbers")
   loan_amount
 end
 
-def get_interest_rate
+def provide_interest_rate
   prompt("What is the annual interest rate? eg. '6.5' for 6.5%")
 
-  interest_rate = get_valid_positive_float("You have to enter a valid interest rate.
+  interest_rate = provide_valid_positive_float("You have to enter a valid interest rate.
                                              Only (positive) numbers")
   interest_rate
 end
 
-def get_duration_in_months
+def provide_duration_in_months
   prompt("What is the loan duration in years? eg. 4 years")
 
-  year_duration = get_valid_positive_float("You have to enter a valid year duration.
+  year_duration = provide_valid_positive_float("You have to enter a valid year duration.
                                            Only (positive) numbers")
 
   month_duration = year_duration * 12.0
@@ -58,9 +62,9 @@ end
 loop do
   prompt("Welcome to the loan calculator. Please provide the following details")
 
-  loan_amount = get_loan_amount()
-  interest_rate = get_interest_rate()
-  duration = get_duration_in_months()
+  loan_amount = provide_loan_amount()
+  interest_rate = provide_interest_rate()
+  duration = provide_duration_in_months()
 
   annuity = calculate_annuity(loan_amount, interest_rate, duration)
 
@@ -78,10 +82,10 @@ loop do
   answer = gets.chomp.downcase
   if answer == "y"
     prompt("Resetting values ...")
-    sleep(0.9)
+    sleep(1.1)
+    clear_screen
   else
     prompt("Ok. Thanks for using this calculator")
     break
   end
-
 end
