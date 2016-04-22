@@ -14,7 +14,7 @@ def prompt(message)
   puts "=> " + message
 end
 
-def get_valid_postive_float(message)
+def get_valid_positive_float(message)
   user_input = nil
   loop do
     user_input = gets.chomp.to_f
@@ -32,7 +32,7 @@ end
 def get_loan_amount
   prompt("What is your total loan amount? eg. 125000.68")
 
-  loan_amount = get_valid_postive_float("You have to enter a valid loan amount.
+  loan_amount = get_valid_positive_float("You have to enter a valid loan amount.
                                           Only (positive) numbers")
   loan_amount
 end
@@ -40,7 +40,7 @@ end
 def get_interest_rate
   prompt("What is the annual interest rate? eg. '6.5' for 6.5%")
 
-  interest_rate = get_valid_postive_float("You have to enter a valid interest rate.
+  interest_rate = get_valid_positive_float("You have to enter a valid interest rate.
                                              Only (positive) numbers")
   interest_rate
 end
@@ -49,7 +49,7 @@ def get_duration_in_months
   prompt("What is the loan duration in years? eg. 4 years")
   user_input = nil
 
-  year_duration = get_valid_postive_float("You have to enter a valid year duration.
+  year_duration = get_valid_positive_float("You have to enter a valid year duration.
                                            Only (positive) numbers")
 
   month_duration = year_duration * 12.0
