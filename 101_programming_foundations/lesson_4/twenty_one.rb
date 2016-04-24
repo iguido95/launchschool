@@ -11,12 +11,12 @@ end
 
 def card_value(card, deck)
   card_value = card[1]
-  if ("2".."10").include?(card_value)
+  if ("2".."10").cover?(card_value)
     return card_value.to_i
   elsif %w(jack queen king).include?(card_value)
     return 10
   elsif card_value == "ace"
-    if deck_value_without_ace(deck) + 11 > 21 # TODO for multiple aces in one deck
+    if deck_value_without_ace(deck) + 11 > 21 # TODO: for multiple aces in one deck
       return 1
     else
       return 11
@@ -113,9 +113,6 @@ def display_dealer_deck(deck)
   puts "Dealer has #{card_to_s(deck[0])} and an unknown card"
 end
 
-# Test
-
-
 # Main Program
 
 main_deck = []
@@ -132,13 +129,11 @@ dealer = {
   stayed: false
 }
 
-
 main_deck = initialize_deck
 initial_deal!(main_deck, player, dealer)
 
 display_own_deck(player[:deck])
 display_dealer_deck(dealer[:deck])
-
 
 loop do
   puts "Draw a card or stay? (draw/stay)"
