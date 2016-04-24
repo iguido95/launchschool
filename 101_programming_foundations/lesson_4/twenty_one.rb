@@ -1,6 +1,6 @@
 require 'pry'
 
-UPPER_VALUE = 21.freeze
+UPPER_VALUE = 21
 
 # Methods
 
