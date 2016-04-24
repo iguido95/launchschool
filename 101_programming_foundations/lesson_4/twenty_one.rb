@@ -1,5 +1,7 @@
 require 'pry'
 
+UPPER_VALUE = 21.freeze
+
 # Methods
 
 def initialize_deck
@@ -11,12 +13,12 @@ end
 
 def card_value(card, deck)
   card_value = card[1]
-  if ("2".."10").cover?(card_value)
+  if ("2".."10").include?(card_value)
     return card_value.to_i
   elsif %w(jack queen king).include?(card_value)
     return 10
   elsif card_value == "ace"
-    if deck_value_without_ace(deck) + 11 > 21 # TODO: for multiple aces in one deck
+    if deck_value_without_ace(deck) + 11 > UPPER_VALUE # TODO: for multiple aces in one deck
       return 1
     else
       return 11
@@ -68,7 +70,7 @@ def stay!(player)
 end
 
 def determine_move_dealer!(deck, dealer)
-  if deck_value(dealer[:deck]) >= 17
+  if deck_value(dealer[:deck]) >= (UPPER_VALUE - 4)
     puts "Dealer stayed"
     dealer[:stayed] = true
   else
@@ -78,12 +80,12 @@ def determine_move_dealer!(deck, dealer)
 end
 
 def busted?(player)
-  deck_value(player[:deck]) > 21
+  deck_value(player[:deck]) > UPPER_VALUE
 end
 
 def nearest_deck(player, dealer)
-  player_distance = (deck_value(player[:deck]) - 21).abs
-  dealer_distance = (deck_value(dealer[:deck]) - 21).abs
+  player_distance = (deck_value(player[:deck]) - UPPER_VALUE).abs
+  dealer_distance = (deck_value(dealer[:deck]) - UPPER_VALUE).abs
   if player_distance > dealer_distance
     dealer
   elsif player_distance < dealer_distance
@@ -115,61 +117,64 @@ end
 
 # Main Program
 
-main_deck = []
-
-player = {
-  name: "Guido",
-  deck: [],
-  stayed: false
-}
-
-dealer = {
-  name: "Dealer",
-  deck: [],
-  stayed: false
-}
-
-main_deck = initialize_deck
-initial_deal!(main_deck, player, dealer)
-
-display_own_deck(player[:deck])
-display_dealer_deck(dealer[:deck])
-
 loop do
-  puts "Draw a card or stay? (draw/stay)"
-  answer = gets.chomp.downcase
+  main_deck = []
+  player = {
+    name: "Guido",
+    deck: [],
+    stayed: false
+  }
+  dealer = {
+    name: "Dealer",
+    deck: [],
+    stayed: false
+  }
 
-  if answer.start_with?("d")
-    draw_card!(main_deck, player)
-    display_own_deck(player[:deck])
+  main_deck = initialize_deck
+  initial_deal!(main_deck, player, dealer)
 
-    if busted?(player)
-      puts "You busted!"
+  display_own_deck(player[:deck])
+  display_dealer_deck(dealer[:deck])
+
+  loop do
+    puts "Draw a card or stay? (draw/stay)"
+    answer = gets.chomp.downcase
+
+    if answer.start_with?("d")
+      draw_card!(main_deck, player)
+      display_own_deck(player[:deck])
+
+      if busted?(player)
+        puts "You busted!"
+        break
+      end
+    else
+      player[:stayed] = true
       break
     end
+  end
+
+  if !busted?(player)
+    puts "Dealer's turn"
+    loop do
+      puts "Dealer draws card"
+      determine_move_dealer!(main_deck, dealer)
+      break if busted?(dealer)
+      break if dealer[:stayed]
+    end
+  end
+
+  puts "#{player[:name]} has: #{deck_value(player[:deck])} points"
+  puts "#{dealer[:name]} has: #{deck_value(dealer[:deck])} points"
+
+  if !!winner(player, dealer)
+    puts "#{winner(player, dealer)[:name]} wins!"
   else
-    player[:stayed] = true
-    break
+    puts "It's a draw"
   end
+
+  puts "Want to play again? (yes/no)"
+  answer = gets.chomp.downcase
+  break unless answer.start_with?("y")
+  system("clear")
 end
-
-if !busted?(player)
-  puts "Dealer's turn"
-  loop do
-    puts "Dealer draws card"
-    determine_move_dealer!(main_deck, dealer)
-    break if busted?(dealer)
-    break if dealer[:stayed]
-  end
-end
-
-puts "#{player[:name]} has: #{deck_value(player[:deck])} points"
-puts "#{dealer[:name]} has: #{deck_value(dealer[:deck])} points"
-
-if !!winner(player, dealer)
-  puts "#{winner(player, dealer)[:name]} wins!"
-else
-  puts "It's a draw"
-end
-
-binding.pry
